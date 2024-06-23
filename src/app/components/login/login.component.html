@@ -1,0 +1,54 @@
+<app-header style="background: linear-gradient(to left ,#032961,#4588ee);"></app-header>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/assets/css/styles.css" rel="stylesheet">
+  <link href="/assets/bootstrap/bootstrap.css" rel="stylesheet">
+ 
+  
+</head>
+<body class="form-v9" style="background: linear-gradient(to left ,#032961,#4588ee); ">
+	<div class="page-content">
+		<div class="form-v9-content" >
+			<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-detail" action="#" method="post">
+				<h2>Login Form</h2>
+				<div class="form-row-total">
+					
+                        <div *ngIf="login" class="alert alert-success" role="alert">
+                            Login avec succés
+                        </div>
+					<div class="form-row">
+						<input type="text" name="your-email" id="your-email" class="input-text" placeholder="Your Email" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+					</div>
+					<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+						{{ errorMessage }}
+					  </div>
+						  <div *ngIf="noemail " class="alert alert-danger" role="alert">
+							  Veuillez saisir un Email
+						  </div> 
+						  <div *ngIf="noform" class="alert alert-danger" role="alert">
+							  Forme d'Email invalide
+						  </div>
+				</div>
+				<div class="form-row-total">
+					<div class="form-row">
+						<input type="password" name="password" id="password" class="input-text" placeholder="Your Password" required>
+					</div>
+					<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+						{{ errorMessage }}
+					  </div>
+					<div *ngIf="nopwd" class="alert alert-danger" role="alert">
+						Veuillez saisir un mot de passe
+					</div>
+					
+				</div>
+				<div class="form-row-last">
+					<input type="submit" name="register" class="register" value="Log in" >
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+
+ 

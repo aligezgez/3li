@@ -1,0 +1,14 @@
+# Node modules
+/node_modules
+
+# Angular build files
+/dist
+/out-tsc
+
+# Environment files
+/src/environments/*.ts
+
+# IDE files
+/.idea
+/.vscode
+.DS_Store
