@@ -2,23 +2,57 @@
 <body class="form-v9">
 	<div class="page-content">
 		<div class="form-v9-content" >
-			<form class="form-detail" action="#" method="post">
+			<form [formGroup]="signupForm"  onSubmit={onSubmit} class="form-detail" action="#" method="post">
 				<h2>Registration Form</h2>
 				<div class="form-row-total">
 					<div class="form-row">
 						<input type="text" name="full-name" id="full-name" class="input-text" placeholder="Your Name" required>
 					</div>
+					<div class="row" >
+						  <div *ngIf="signupForm.controls.name.errors?.['required'] && noname" class="alert alert-danger" role="alert">
+							Enter a name
+						  </div>
+						  <div *ngIf="signupForm.controls.name.errors?.['nom'] " class="alert alert-danger" role="alert">
+							Invalid name form
+						  </div>
+					 </div>
 					<div class="form-row">
 						<input type="text" name="your-email" id="your-email" class="input-text" placeholder="Your Email" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
 					</div>
+					<div class="row" >
+						  <div *ngIf="signupForm.controls.email.errors?.['required'] && nomail" class="alert alert-danger" role="alert">
+							Enter an email
+						  </div>
+						  <div *ngIf="signupForm.controls.email.errors?.['email'] " class="alert alert-danger" role="alert">
+							Invalid email form
+						  </div>
+						  <div *ngIf="userexist" class="alert alert-danger" role="alert">
+							User already exists
+						  </div>
+					  </div>
 				</div>
 				<div class="form-row-total">
 					<div class="form-row">
 						<input type="password" name="password" id="password" class="input-text" placeholder="Your Password" required>
 					</div>
+					<div class="row" >
+						  <div *ngIf="signupForm.controls.password.errors?.['required'] && nopwd  " class="alert alert-danger" role="alert">
+							Enter a password
+						  </div>
+						  <div *ngIf="signupForm.controls.password.errors?.['matchPassword']  " class="alert alert-danger" role="alert">
+							Passwords does not match
+						  </div>
+						  
+					 </div>
 					<div class="form-row">
 						<input type="password" name="comfirm-password" id="comfirm-password" class="input-text" placeholder="Confirm Password" required>
 					</div>
+					<div class="row" >
+						<div *ngIf="signupForm.controls.password.errors?.['matchPassword']  " class="alert alert-danger" role="alert">
+						  Passwords does not match
+						</div>
+						
+				   </div>
 				</div>
 				<div class="form-row-last">
 					<input type="submit" name="register" class="register" value="Sign Up">
@@ -27,4 +61,5 @@
 		</div>
 	</div>
 </body>
+
 

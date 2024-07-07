@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { timer } from 'rxjs';
+
 
 @Component({
   selector: 'app-header',
@@ -9,5 +11,15 @@ import { RouterModule } from '@angular/router';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  constructor(private router: Router) { }
 
+  ngOnInit(): void {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        
+        window.location.reload();
+      }
+    });
+  }
+ 
 }
