@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
-
+import { RouterOutlet } from '@angular/router';
 
 
 @Component({
@@ -8,7 +8,7 @@ import { HeaderComponent } from '../header/header.component';
     standalone: true,
     templateUrl: './home.component.html',
     styleUrl: './home.component.css',
-    imports: [HeaderComponent]
+    imports: [HeaderComponent,RouterOutlet]
 })
 export class HomeComponent implements OnInit {
 

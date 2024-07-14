@@ -5,57 +5,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/assets/css/styles.css" rel="stylesheet">
   <link href="/assets/bootstrap/bootstrap.css" rel="stylesheet">
- 
-  
 </head>
-<body class="form-v9" style="background: linear-gradient(to left ,#032961,#4588ee); ">
-	<div class="page-content">
-		<div class="form-v9-content" >
-			<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-detail">
-				<h2>Login Form</h2>
-				<div class="form-row-total">
-			  
-					<div *ngIf="login" class="alert alert-success" role="alert">
-						Login avec succés
-					  </div>
-			  
-				  <div class="form-row">
-					<input type="text" formControlName="email" name="email" id="email" class="input-text" placeholder="Your Email" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
-				  </div>
-				  <div class="row" >
-					<div *ngIf="authError()" class="alert alert-danger" role="alert">
-						Invalid password or email
-					  </div>
-					  <div *ngIf="form.controls.email.errors?.['required'] && email" class="alert alert-danger" role="alert">
-						Enter an email
-					  </div>
-					  <div *ngIf="form.controls.email.errors?.['email'] && mailform" class="alert alert-danger" role="alert">
-						Invalid email form
-					  </div>
-				  </div>
-				</div>
-			  
-				<div class="form-row-total">
-				  <div class="form-row">
-					<input type="password" formControlName="password" name="password" id="password" class="input-text" placeholder="Your Password" required>
-				  </div>
-			  
-				 <div class="row" >
-					<div *ngIf="authError()" class="alert alert-danger" role="alert">
-						Invalid password or email
-					  </div>
-					  <div *ngIf="form.controls.password.errors?.['required'] && pwd " class="alert alert-danger" role="alert">
-						Enter a password
-					  </div>
-				 </div>
-			  
-				</div>
-				<div class="form-row-last">
-				  <input type="submit" name="register" class="register" value="Log in"  [disabled]="form.invalid" >
-				</div>
-			  </form>
-		</div>
-	</div>
+<body class="form-v9" style="background: linear-gradient(to left ,#032961,#4588ee);">
+  <div class="page-content">
+    <div class="form-v9-content">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-detail">
+        <h2>Login Form</h2>
+        <div class="form-row-total">
+          <div *ngIf="login" class="alert alert-success" role="alert">
+            Login avec succès
+          </div>
+          <div class="form-row">
+            <input type="text" formControlName="email" name="email" id="email" class="input-text" placeholder="Your Email" [type]="email">
+          </div>
+          <div class="row">
+            <div *ngIf="authError()" class="alert alert-danger" role="alert">
+              Invalid password or email
+            </div>
+            <div *ngIf="form.controls.email.errors?.['required'] " class="alert alert-danger" role="alert">
+              Enter an email
+            </div>
+            <div *ngIf="form.controls.email.errors?.['email'] " class="alert alert-danger" role="alert">
+              Invalid email form
+            </div>
+          </div>
+        </div>
+        <div class="form-row-total">
+          <div class="form-row">
+            <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="input-text" id="pwd" placeholder="Your Password" required
+                (focus)="onFocus('password')" (blur)="onBlur('password')" style="width: 335px;">
+              <span class="password-toggle" (click)="togglePasswordVisibility('password')">
+                <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+              </span>
+          </div>
+          <div class="row">
+            <div *ngIf="authError()" class="alert alert-danger" role="alert">
+              Invalid password or email
+            </div>
+            <div *ngIf="form.controls.password.errors?.['required'] && pwd" class="alert alert-danger" role="alert">
+              Enter a password
+            </div>
+          </div>
+        </div>
+        <div class="form-row-last">
+          <input type="submit" name="register" class="register" value="Log in" [disabled]="form.invalid">
+        </div>
+      </form>
+    </div>
+  </div>
 </body>
-
- 

@@ -1,17 +1,12 @@
-import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
-import { SignupComponent } from './components/signup/signup.component';
-import { LoginComponent } from './components/login/login.component';
-import { dashboardComponent } from './components/dashboard/dashboard.component';
-import { MessageComponent } from './components/message/message.component';
-import { error } from 'console';
-import { ErrorComponent } from './components/error/error.component';
-import { NgModule } from '@angular/core';
+import { Routes } from "@angular/router";
+import { dashboardComponent } from "./components/dashboard/dashboard.component";
+import { ErrorComponent } from "./components/error/error.component";
+import { HomeComponent } from "./components/home/home.component";
+import { LoginComponent } from "./components/login/login.component";
+import { MessageComponent } from "./components/message/message.component";
+import { SignupComponent } from "./components/signup/signup.component";
 
-
-
- const routeConfig: Routes = [
+const routeConfig: Routes = [
     {path: '', component: HomeComponent},
     {path:'signup',component:SignupComponent},
     {path:'login',component:LoginComponent},

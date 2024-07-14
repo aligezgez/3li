@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
-import { timer } from 'rxjs';
+
 
 
 @Component({

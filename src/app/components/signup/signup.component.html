@@ -1,65 +1,67 @@
 <app-header></app-header>
 <body class="form-v9">
-	<div class="page-content">
-		<div class="form-v9-content" >
-			<form [formGroup]="signupForm"  onSubmit={onSubmit} class="form-detail" action="#" method="post">
-				<h2>Registration Form</h2>
-				<div class="form-row-total">
-					<div class="form-row">
-						<input type="text" name="full-name" id="full-name" class="input-text" placeholder="Your Name" required>
-					</div>
-					<div class="row" >
-						  <div *ngIf="signupForm.controls.name.errors?.['required'] && noname" class="alert alert-danger" role="alert">
-							Enter a name
-						  </div>
-						  <div *ngIf="signupForm.controls.name.errors?.['nom'] " class="alert alert-danger" role="alert">
-							Invalid name form
-						  </div>
-					 </div>
-					<div class="form-row">
-						<input type="text" name="your-email" id="your-email" class="input-text" placeholder="Your Email" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
-					</div>
-					<div class="row" >
-						  <div *ngIf="signupForm.controls.email.errors?.['required'] && nomail" class="alert alert-danger" role="alert">
-							Enter an email
-						  </div>
-						  <div *ngIf="signupForm.controls.email.errors?.['email'] " class="alert alert-danger" role="alert">
-							Invalid email form
-						  </div>
-						  <div *ngIf="userexist" class="alert alert-danger" role="alert">
-							User already exists
-						  </div>
-					  </div>
-				</div>
-				<div class="form-row-total">
-					<div class="form-row">
-						<input type="password" name="password" id="password" class="input-text" placeholder="Your Password" required>
-					</div>
-					<div class="row" >
-						  <div *ngIf="signupForm.controls.password.errors?.['required'] && nopwd  " class="alert alert-danger" role="alert">
-							Enter a password
-						  </div>
-						  <div *ngIf="signupForm.controls.password.errors?.['matchPassword']  " class="alert alert-danger" role="alert">
-							Passwords does not match
-						  </div>
-						  
-					 </div>
-					<div class="form-row">
-						<input type="password" name="comfirm-password" id="comfirm-password" class="input-text" placeholder="Confirm Password" required>
-					</div>
-					<div class="row" >
-						<div *ngIf="signupForm.controls.password.errors?.['matchPassword']  " class="alert alert-danger" role="alert">
-						  Passwords does not match
-						</div>
-						
-				   </div>
-				</div>
-				<div class="form-row-last">
-					<input type="submit" name="register" class="register" value="Sign Up">
-				</div>
-			</form>
-		</div>
-	</div>
+  <div class="page-content">
+    <div class="form-v9-content">
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="form-detail">
+        <h2>Registration Form</h2>
+        <div class="form-row-total">
+          <div class="form-row">
+            <input type="text" formControlName="name" class="input-text" placeholder="Your Name" required pattern="[a-zA-Z\s]+$"
+              (focus)="onFocus('name')" (blur)="onBlur('name')">
+            <div *ngIf="signupForm.controls.name.touched && signupForm.controls.name.errors?.required && !isFieldFocused('name')" class="alert alert-danger" role="alert">
+              Enter a name
+            </div>
+            <div *ngIf="signupForm.controls.name.touched && signupForm.controls.name.errors?.pattern && !isFieldFocused('name')" class="alert alert-danger" role="alert">
+              Invalid name format
+            </div>
+          </div>
+          <div class="form-row">
+            <input type="text" formControlName="email" class="input-text" placeholder="Your Email" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}"
+              (focus)="onFocus('email')" (blur)="onBlur('email')">
+            <div *ngIf="signupForm.controls.email.touched && signupForm.controls.email.errors?.required && !isFieldFocused('email')" class="alert alert-danger" role="alert">
+              Enter an email
+            </div>
+            <div *ngIf="signupForm.controls.email.touched && signupForm.controls.email.errors?.pattern && !isFieldFocused('email')" class="alert alert-danger" role="alert">
+              Invalid email format
+            </div>
+            <div *ngIf="userExists && !isFieldFocused('email')" class="alert alert-danger" role="alert">
+              User already exists
+            </div>
+          </div>
+        </div>
+        <div class="form-row-total">
+          <div class="form-row">
+            <div class="input-container">
+              <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="input-text" id="pwd" placeholder="Your Password" required
+                (focus)="onFocus('password')" (blur)="onBlur('password')" style="width: 335px;">
+              <span class="password-toggle" (click)="togglePasswordVisibility('password')">
+                <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+              </span>
+            </div>
+            <div *ngIf="signupForm.controls.password.touched && signupForm.controls.password.errors?.required && !isFieldFocused('password')" class="alert alert-danger" role="alert">
+              Enter a password
+            </div>
+            <div *ngIf="signupForm.get('password').touched && signupForm.controls.confirmPassword.errors?.passwordMismatch && !isFieldFocused('password') && !isFieldFocused('confirmPassword')" class="alert alert-danger" role="alert">
+              Passwords do not match
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="input-container">
+              <input [type]="showConfirmPassword ? 'text' : 'password'" formControlName="confirmPassword" class="input-text" id="pwdc" placeholder="Confirm Password" required
+                (focus)="onFocus('confirmPassword')" (blur)="onBlur('confirmPassword')" style="width: 335px;">
+              <span class="password-toggle" (click)="togglePasswordVisibility('confirmPassword')">
+                <i [class]="showConfirmPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+              </span>
+            </div>
+            <div *ngIf="signupForm.get('confirmPassword').touched && signupForm.controls.confirmPassword.errors?.passwordMismatch && !isFieldFocused('confirmPassword') && !isFieldFocused('password')" class="alert alert-danger" role="alert">
+              Passwords do not match
+            </div>
+          </div>
+        </div>
+        <div class="form-row-last">
+          <input type="submit" class="register" value="Sign Up">
+        </div>
+      </form>
+    </div>
+  </div>
 </body>
-
-

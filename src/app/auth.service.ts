@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from "@angular/core";
 import { Auth,  createUserWithEmailAndPassword,  signInWithEmailAndPassword, updateProfile, user } from "@angular/fire/auth";
 import { Observable, from } from "rxjs";
-import { UserInterface } from "../app/auth.interface";
+import { UserInterface } from "./user.interface";
 
 
 @Injectable({
@@ -12,7 +12,7 @@ export class AuthService {
   firebaseAuth = inject(Auth);
   user$ = user(this.firebaseAuth);
   currentUserSig = signal<UserInterface | null | undefined>(undefined);
-
+  
   async register(email: string, username: string, password: string) {
     console.log('Registering user:', email, username);
 try {

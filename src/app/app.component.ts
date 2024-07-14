@@ -1,22 +1,20 @@
-import { Component, inject , OnInit } from '@angular/core';
-import { DataSharingService } from './DataSharingService';
+import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
+import { DataSharingService } from './DataSharingService';
 import { RouterOutlet } from '@angular/router';
-import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { HomeComponent } from './components/home/home.component';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet,AngularFireStorageModule,HomeComponent],
+  standalone: true,  
+  imports: [CommonModule, RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
-  providers:[DataSharingService]
+  styleUrls: ['./app.component.css'],
+  providers: [DataSharingService]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'boti';
-  authService = inject(AuthService)
-  
+  authService = inject(AuthService);
 
-  ngOnInit(): void{}
-  
+
+  ngOnInit(): void {}
 }
