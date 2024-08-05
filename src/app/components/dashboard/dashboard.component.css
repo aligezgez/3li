@@ -1209,25 +1209,177 @@
       max-width: 50%;
     }
   }
-  
-  /*--------------------------------------------------------------
-  # Footer
-  --------------------------------------------------------------*/
-  .footer {
-    padding: 20px 0;
-    font-size: 14px;
-    transition: all 0.3s;
-    border-top: 1px solid #cddfff;
+
+  .search-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
   }
   
-  .footer .copyright {
-    text-align: center;
-    color: #012970;
+  .search-input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
   }
   
-  .footer .credits {
-    padding-top: 5px;
-    text-align: center;
-    font-size: 13px;
-    color: #012970;
+  .dropdown-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    background-color: #fff;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    max-width: 320px; 
+    padding: 0;
+    list-style: none;
+    max-height: none;
+    margin-left: 362px;
+    margin-right: 60px;
   }
+  
+  .dropdown-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 100px;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .dropdown-item:active,
+  .dropdown-item:focus {
+    background-color: #e0e0e0;
+  }
+  
+  /* Container for the profile picture */
+.profile-pic-container {
+  position: relative; /* Needed for positioning the "+" icon */
+  width: 40px;
+  height: 40px;
+}
+
+/* Styling for the profile image */
+.profile-pic-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image covers the container */
+}
+
+
+
+.profile-pic-container::after {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  border-radius: 50%; /* Circular border */
+  pointer-events: none; /* Ensure the border doesn't interfere with interactions */
+  z-index: 1; /* Ensure the border is below the icon */
+}
+
+/* Dropdown Menu Styling */
+.dropdown-menu.profile {
+  width: 200px; /* Adjust the width as needed */
+  padding: 0; /* Remove default padding */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: add shadow for better visibility */
+}
+
+/* Ensure dropdown items fit within the new width */
+.dropdown-menu.profile .dropdown-item {
+  padding: 10px 15px; /* Adjust padding as needed */
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+/* Optionally, adjust the position if needed */
+.dropdown-menu.profile {
+  margin: 0; /* Remove margin if it's affecting positioning */
+}
+
+/* Dropdown List Styling */
+.dropdown-list {
+  position: absolute; /* Ensure it appears over other content */
+  background: white; /* Ensure the dropdown has a background */
+  border: 1px solid #ddd; /* Add a border for better visibility */
+  border-radius: 4px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for better visibility */
+  max-height: 300px; /* Limit height to fit within the view */
+  overflow-y: auto; /* Add scrollbar if content exceeds height */
+  z-index: 1000; /* Ensure it appears above other content */
+}
+
+/* Dropdown Item Styling */
+.dropdown-item {
+  padding: 10px 15px; /* Space inside each item */
+  display: flex; /* Flexbox for alignment */
+  align-items: center; /* Center items vertically */
+}
+
+/* Profile Image in Dropdown */
+.dropdown-item .profile-img {
+  width: 40px; /* Adjust size as needed */
+  height: 40px; /* Adjust size as needed */
+  object-fit: cover; /* Ensure image fits within the circle */
+  border-radius: 50%; /* Circular profile image */
+  margin-right: 15px; /* Space between image and text */
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.user-name {
+  margin-left: 10px;
+}
+
+.button-container {
+  margin-left: auto; /* Pushes buttons to the right */
+  margin-right: 10px; /* Adds space to the right of the buttons */
+}
+
+.custom-btn {
+  margin-right: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-left: 5px; /* Adds space between buttons */
+}
+
+.send-btn {
+  background: linear-gradient(45deg, #4caf50, #81c784);
+  color: #fff;
+}
+
+.send-btn:hover {
+  background: linear-gradient(45deg, #43a047, #66bb6a);
+  transform: translateY(-2px);
+}
+
+.cancel-btn {
+  background: linear-gradient(45deg, #f44336, #e57373);
+  color: #fff;
+}
+
+.cancel-btn:hover {
+  background: linear-gradient(45deg, #e53935, #ef5350);
+  transform: translateY(-2px);
+}

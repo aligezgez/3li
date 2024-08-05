@@ -164,3 +164,30 @@ input:-moz-placeholder {
 	transform: translateY(-50%);
 	cursor: pointer;
   }
+  .alert1, .alert2 {
+	margin-top: 5px;
+	color: #721c24;
+	background-color: #f8d7da;
+	border-color: #f5c6cb;
+	padding: 10px;
+	border-radius: 4px;
+	font-size: 14px;
+	width: 100%;
+  }
+  .input-text {
+	width: 300px; /* Adjust the width as needed */
+	margin-bottom: 10px; /* Add some space below the input field */
+  }
+  
+  .password-toggle {
+	position: absolute;
+	right: 14px;
+	top: 31%;
+	transform: translateY(-50%);
+	cursor: pointer;
+  }
+  
+  .form-row {
+	position: relative;
+	margin-bottom: 20px; /* Adjust the margin to move it closer to the button */
+  }

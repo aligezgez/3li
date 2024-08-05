@@ -1,27 +1,31 @@
-   .header-left{
-    float: left;
-    padding-left: 4cm;
-    
- }
- 
- body{
-   background: linear-gradient(to left ,#032961,#4588ee);
- }
- .black-line {
-  border: none; 
-  height: 1px;
-  background-color: black;
-  margin: 0; 
-  padding: 0; 
+.header-left{
+  float: left;
+  padding-left: 4cm;
+  
+}
+
+body{
+ background: linear-gradient(to left ,#032961,#4588ee);
+}
+.black-line {
+border: none; 
+height: 1px;
+background-color: black;
+margin: 0; 
+padding: 0; 
 }
 
 
 .fa-light {
-   font-size: 20px; 
- }
- .nav-link:hover {
-   color: black !important;
- }
- .nav-link i:hover {
-   color: black !important;
- }
+ font-size: 20px; 
+}
+.nav-link:hover {
+ color: black !important;
+}
+.nav-link i:hover {
+ color: black !important;
+}
+:host {
+  display: block;
+
+}

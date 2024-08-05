@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule, FormControl, ValidationErrors } from '@angular/forms';
 import { collection, getDocs, getFirestore, query, where, addDoc } from 'firebase/firestore';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../auth.service';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -14,25 +15,24 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
   imports: [HeaderComponent,CommonModule,ReactiveFormsModule,AngularFireStorageModule]
 })
 export class SignupComponent implements OnInit {
-
+ 
   focusedField: string | null = null;
   signupForm: any;
   userExists = false;
   showPassword = false;
   showConfirmPassword = false;
 
-  constructor(private formBuilder: FormBuilder,private authservice:AuthService) {}
+  constructor(private formBuilder: FormBuilder,private authservice:AuthService,private router: Router) {}
 
   ngOnInit(): void {
-      this.signupForm = this.formBuilder.group({
-          name: ['', [Validators.required,Validators.pattern(/^[a-zA-Z\s]+$/)]],
-          email: ['', [Validators.required, Validators.pattern('[^@]+@[^@]+\\.[a-zA-Z]{2,6}')]],
-          password: ['', Validators.required],
-          confirmPassword: ['', Validators.required]
+    this.signupForm = this.formBuilder.group({
+      name: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)] }),
+      email: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.pattern('[^@]+@[^@]+\\.[a-zA-Z]{2,6}')] }),
+      password: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
+      confirmPassword: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] })
     }, {
-        validator: this.passwordMatchValidator 
+      validator: this.passwordMatchValidator
     });
-      
   }
   markAllAsTouched(): void {
     this.signupForm.markAllAsTouched();
@@ -57,7 +57,9 @@ export class SignupComponent implements OnInit {
               this.userExists = false;
               await this.addNewUser(name, email, password);
               await this.registeruser(name, email, password);
-              this.signupForm.reset();            
+              this.signupForm.reset();   
+              this.router.navigate(['/dashboard']); 
+                     
           }
       } 
   }

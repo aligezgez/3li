@@ -16,13 +16,14 @@
             Login avec succès
           </div>
           <div class="form-row">
-            <input type="text" formControlName="email" name="email" id="email" class="input-text" placeholder="Your Email" [type]="email">
+            <input type="text" formControlName="email" name="email" id="email" class="input-text" placeholder="Your Email" [type]="email" (focus)="onFocus('email')" (blur)="onBlur('email')">
           </div>
           <div class="row">
-            <div *ngIf="authError()" class="alert alert-danger" role="alert">
-              Invalid password or email
+            <div *ngIf="authError() && !userExists && form.controls.email.touched &&  !isFieldFocused('email') && !form.controls.email.errors?.['email']" class="alert1 alert-danger" role="alert">
+              User does not exist
             </div>
-            <div *ngIf="form.controls.email.errors?.['required'] " class="alert alert-danger" role="alert">
+            
+            <div *ngIf="form.controls.email.touched && form.controls.email.errors?.['required'] && !isFieldFocused('email')" class="alert1 alert-danger" role="alert">
               Enter an email
             </div>
             <div *ngIf="form.controls.email.errors?.['email'] " class="alert alert-danger" role="alert">
@@ -39,16 +40,18 @@
               </span>
           </div>
           <div class="row">
-            <div *ngIf="authError()" class="alert alert-danger" role="alert">
-              Invalid password or email
+            <div *ngIf="form.controls['password'].hasError('incorrect') && form.controls.password.value.length > 0" class="alert2 alert-danger" role="alert">
+              Incorrect password
             </div>
-            <div *ngIf="form.controls.password.errors?.['required'] && pwd" class="alert alert-danger" role="alert">
+            
+            <div *ngIf="form.controls.password.errors?.['required'] && form.controls.password.touched && !isFieldFocused('password') && userExists" class="alert2 alert-danger" role="alert">
               Enter a password
             </div>
+           
           </div>
         </div>
         <div class="form-row-last">
-          <input type="submit" name="register" class="register" value="Log in" [disabled]="form.invalid">
+          <input type="submit" name="register" class="register" value="Log in" >
         </div>
       </form>
     </div>

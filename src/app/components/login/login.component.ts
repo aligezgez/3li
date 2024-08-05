@@ -1,7 +1,6 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../auth.service';
-import { Location } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CustomValidators } from '../../custom-validators';
 import { catchError, finalize, of, take, tap } from 'rxjs';
@@ -9,6 +8,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { HeaderComponent } from '../header/header.component';
 import { CommonModule } from '@angular/common';
 import { User } from 'firebase/auth';
+import { getFirestore, collection, where, getDocs , query} from 'firebase/firestore';
+
 
 @Component({
   selector: 'app-login',
@@ -18,14 +19,15 @@ import { User } from 'firebase/auth';
   imports: [RouterOutlet, ReactiveFormsModule, HeaderComponent, CommonModule],
   providers: [AuthService],
 })
+
 export class LoginComponent implements OnInit {
+  
+  
   private readonly _router = inject(Router);
-  private readonly _location = inject(Location);
   private readonly _authService = inject(AuthService);
-  private readonly _fb = inject(FormBuilder);
   authError = signal<boolean>(false);
   isLoginInProgress = signal<boolean>(false);
-
+  ok=false;
   form = new FormGroup({
     email: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, CustomValidators.email] }),
     password: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
@@ -38,13 +40,9 @@ export class LoginComponent implements OnInit {
   mailform = false;
   response: { user?: User } = {};
   showPassword = false;
+  userExists=false;
 
-  constructor() {
-    if (typeof window !== 'undefined') {
-      const accessToken = localStorage.getItem('accessToken');
-      if (accessToken) this._location.back();
-    }
-  }
+  constructor(private formBuilder: FormBuilder,private authservice:AuthService,private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -59,24 +57,39 @@ export class LoginComponent implements OnInit {
       this.markAllAsTouched();
       return;
     }
-  
+    const email = this.form.get('email')!.value;
+    const userExists = await this.checkIfUserExists(email);
     this.isLoginInProgress.set(true);
+    this.userExists = userExists;
   
-    (await this._authService.login(this.form.controls.email.value.trim(), this.form.controls.password.value.trim()))
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          this.handleAuthError(error);
-          return of(error);
-        }),
-        tap(response => this._handleLogin(response)),
-        finalize(() => this.isLoginInProgress.set(false))
-      )
-      .subscribe({
-        error: (error) => {
-          console.error('Login error:', error);
-        }
-      });
+    if (userExists) {
+     
+      (await this._authService.login(this.form.controls.email.value.trim(), this.form.controls.password.value.trim()))
+        .pipe(
+          catchError((error: HttpErrorResponse) => {
+            if (error.error.code === 'auth/invalid-credential') {
+              console.log('mot de passe ghalet 3asba ');
+              this.form.controls.password.setErrors({ incorrect: true });
+            }
+            this.handleAuthError(error);
+            return of(error);
+          }),
+          tap(response => this._handleLogin(response)),
+          finalize(() => this.isLoginInProgress.set(false))
+        )
+        .subscribe({
+          error: (error) => {
+            console.error('Login error:', error);
+            
+          }
+        });
+    } else {
+      this.isLoginInProgress.set(false);
+      this.authError.set(true); 
+      
+    }
   }
+  
 
   private _handleLogin(response: any): void {
     if (!response?.user) return;
@@ -90,7 +103,7 @@ export class LoginComponent implements OnInit {
 
   handleAuthError(err: HttpErrorResponse): void {
     if (!err.error.code) return;
-
+  
     this.authError.set(true);
     this.form.valueChanges
       .pipe(
@@ -99,6 +112,7 @@ export class LoginComponent implements OnInit {
       )
       .subscribe();
   }
+  
 
   isLoggedIn(): boolean {
     return localStorage.getItem('accessToken') !== null;
@@ -114,7 +128,13 @@ export class LoginComponent implements OnInit {
     this.focusedField = fieldName;
   }
 
-  onBlur(fieldName: string): void {
+  async onBlur(fieldName: string): Promise<void> {
+    if (fieldName === 'email') {
+      const email = this.form.get('email')!.value;
+      const userExists = await this.checkIfUserExists(email);
+      this.userExists = userExists;
+      this.authError.set(!userExists); 
+    }
     if (this.focusedField === fieldName) {
       this.focusedField = null;
     }
@@ -124,6 +144,12 @@ export class LoginComponent implements OnInit {
     return this.focusedField === fieldName;
   }
 
-  
+  async checkIfUserExists(email: string): Promise<boolean> {
+    const db = getFirestore();
+    const bundleRef = collection(db, "users");
+    const q1 = query(bundleRef, where("email", "==", email));
+    const nompr1 = await getDocs(q1);
+    return !nompr1.empty;
+  }
 
 }

@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { DataSharingService } from './DataSharingService';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AngularFirestore } from '@angular/fire/compat/firestore/firestore';
 @Component({
   selector: 'app-root',
   standalone: true,  

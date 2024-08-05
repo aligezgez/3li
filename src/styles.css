@@ -2,3 +2,6 @@
     background-color: linear-gradient(to left, #032961, #4588ee);
   }
   
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
